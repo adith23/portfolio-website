@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: "Aptos", "Trebuchet MS", "Segoe UI", sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --background: #f4efe5;
+  --foreground: #1f2937;
+  --muted: #6b7280;
+  --surface: rgba(255, 252, 247, 0.82);
+  --surface-strong: rgba(255, 248, 237, 0.96);
+  --line: rgba(31, 41, 55, 0.12);
+  --accent: #bb4d00;
+  --accent-strong: #8f3900;
+  --accent-soft: rgba(187, 77, 0, 0.12);
+  --success: #0f766e;
+  --danger: #b91c1c;
+  --shadow: 0 24px 70px rgba(36, 25, 12, 0.09);
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 2rem;
+  --container: 76rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(187, 77, 0, 0.16), transparent 26%),
+    radial-gradient(circle at right center, rgba(15, 118, 110, 0.12), transparent 22%),
+    linear-gradient(180deg, #f9f5ed 0%, var(--background) 100%);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: rgba(187, 77, 0, 0.18);
+}
+
+.prose-rich {
+  color: var(--foreground);
+}
+
+.prose-rich :where(p, ul, ol) {
+  margin: 0 0 1rem;
+  line-height: 1.75;
+}
+
+.prose-rich :where(h2, h3, h4) {
+  font-family: var(--font-display), serif;
+  line-height: 1.15;
+  margin: 2rem 0 1rem;
+}
+
+.prose-rich ul,
+.prose-rich ol {
+  padding-left: 1.25rem;
+}
+
+.prose-rich a {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.prose-rich code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: rgba(31, 41, 55, 0.06);
+  border-radius: 0.35rem;
+  padding: 0.15rem 0.35rem;
+}
+
+.surface {
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow);
+}
+
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  outline: 3px solid rgba(187, 77, 0, 0.4);
+  outline-offset: 2px;
+}
