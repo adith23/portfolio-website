@@ -8,8 +8,17 @@ export const projectsQuery = groq`
     "slug": slug.current,
     "imageUrl": mainImage.asset->url,
     "imageAlt": mainImage.alt,
+    "coverImage": {
+      "url": mainImage.asset->url,
+      "alt": mainImage.alt
+    },
+    "date": _createdAt,
+    "publishedAt": _createdAt,
     description,
+    "summary": description,
     technologies,
-    projectUrl
+    "techStack": coalesce(technologies, []),
+    projectUrl,
+    "liveUrl": projectUrl
   }
 `;

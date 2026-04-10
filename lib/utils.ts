@@ -12,9 +12,13 @@ export function absoluteUrl(path = "/") {
   return `${siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export function formatDate(date: string) {
+export function formatDate(date?: string | null) {
+  if (!date) return "";
+  const parsedDate = new Date(date);
+  if (isNaN(parsedDate.getTime())) return "";
+
   return new Intl.DateTimeFormat("en", {
     year: "numeric",
     month: "short",
-  }).format(new Date(date));
+  }).format(parsedDate);
 }

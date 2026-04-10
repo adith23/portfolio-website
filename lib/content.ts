@@ -21,12 +21,17 @@ async function sanityFetch<T>(
   params: Record<string, string> = {},
   tags: string[] = [],
 ) {
-  const isDraft = (await draftMode()).isEnabled;
+  let isDraft = false;
+  
+  try {
+    isDraft = (await draftMode()).isEnabled;
+  } catch (error) {
+  }
 
   return sanityClient.fetch<T>(query, params, {
     perspective: isDraft ? "previewDrafts" : "published",
-    next: isDraft ? { revalidate: 0 } : { revalidate: 3600, tags },
-    useCdn: !isDraft,
+    next: { revalidate: isDraft || process.env.NODE_ENV === "development" ? 0 : 3600, tags },
+    useCdn: process.env.NODE_ENV === "development" ? false : !isDraft,
   });
 }
 

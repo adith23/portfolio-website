@@ -24,9 +24,9 @@ export function ProjectCard({ project }: { project: ProjectCardType }) {
       </div>
       <div className="space-y-5 p-6">
         <div className="flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
-          <span>{project.status}</span>
+          <span>{project.status || "Completed"}</span>
           <span aria-hidden="true">/</span>
-          <time dateTime={project.publishedAt}>{formatDate(project.publishedAt)}</time>
+          <time dateTime={project.publishedAt || (project as any).date}>{formatDate(project.publishedAt || (project as any).date)}</time>
         </div>
         <div className="space-y-3">
           <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight">
@@ -37,7 +37,7 @@ export function ProjectCard({ project }: { project: ProjectCardType }) {
           <p className="text-base leading-7 text-[var(--muted)]">{project.summary}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {project.techStack.map((tag) => (
+          {(project.techStack || (project as any).technologies || []).map((tag: string) => (
             <Tag key={tag} label={tag} />
           ))}
         </div>
