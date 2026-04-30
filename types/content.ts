@@ -30,6 +30,13 @@ export type PortableTextBlock = {
   [key: string]: unknown;
 };
 
+export type Certification = {
+  title: string;
+  issuer: string;
+  issueDate?: string;
+  credentialUrl?: string;
+};
+
 export type ProfileViewModel = {
   fullName: string;
   headline: string;
@@ -43,6 +50,7 @@ export type ProfileViewModel = {
   contactEmail: string;
   availabilityStatus?: string;
   stats: StatItem[];
+  certifications?: Certification[];
 };
 
 export type ProjectCard = {

@@ -10,6 +10,7 @@ import {
   GraduationCap,
   User,
   Mail,
+  Award,
 } from "lucide-react";
 import { getFeaturedProjects, getProfile } from "@/lib/content";
 import { buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/jsonld";
@@ -86,51 +87,53 @@ const ProfileHeader: React.FC<{ profile: any }> = ({ profile }) => {
 
       <p className="text-lg text-gray-700 mb-2">{profile.headline}</p>
 
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-gray-500 text-sm">
-        {profile.socialLinks && profile.socialLinks.length > 0 ? (
-          profile.socialLinks.map((link: any) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
-            >
-              <SocialIcon label={link.label} size={16} />
-              <span className="leading-tight pt-[2px]">{link.label}</span>
-            </a>
-          ))
-        ) : (
-          <>
-            <a
-              href="https://linkedin.com/in/adithyaramanayake"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
-            >
-              <SocialIcon label="LinkedIn" size={16} />
-              <span className="leading-tight pt-[2px]">LinkedIn</span>
-            </a>
-            <a
-              href="https://github.com/adithyaramanayake"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
-            >
-              <SocialIcon label="GitHub" size={16} />
-              <span className="leading-tight pt-[2px]">GitHub</span>
-            </a>
-          </>
-        )}
-        <a
-          href={`mailto:${profile.contactEmail || "adithyaramanayake20@gmail.com"}`}
-          className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
-        >
-          <Mail size={16} />
-          <span className="leading-tight pt-[2px]">
-            {profile.contactEmail || "adithyaramanayake20@gmail.com"}
-          </span>
-        </a>
+      <div className="flex flex-col items-center gap-y-2 text-gray-500 text-sm">
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          {profile.socialLinks && profile.socialLinks.length > 0 ? (
+            profile.socialLinks.map((link: any) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
+              >
+                <SocialIcon label={link.label} size={16} />
+                <span className="leading-tight pt-[2px]">{link.label}</span>
+              </a>
+            ))
+          ) : (
+            <>
+              <a
+                href="https://linkedin.com/in/adithyaramanayake"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
+              >
+                <SocialIcon label="LinkedIn" size={16} />
+                <span className="leading-tight pt-[2px]">LinkedIn</span>
+              </a>
+              <a
+                href="https://github.com/adithyaramanayake"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
+              >
+                <SocialIcon label="GitHub" size={16} />
+                <span className="leading-tight pt-[2px]">GitHub</span>
+              </a>
+            </>
+          )}
+          <a
+            href={`mailto:${profile.contactEmail || "adithyaramanayake20@gmail.com"}`}
+            className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
+          >
+            <Mail size={16} />
+            <span className="leading-tight pt-[2px]">
+              {profile.contactEmail || "adithyaramanayake20@gmail.com"}
+            </span>
+          </a>
+        </div>
         <div className="flex items-center gap-1.5">
           <MapPin size={16} />
           <span className="leading-tight pt-[2px]">
@@ -341,6 +344,110 @@ export default async function HomePage() {
                       techStack: ["React", "TypeScript", "Node.js", "Redis"],
                     }}
                   />
+                </>
+              )}
+            </div>
+          </ExpandableSection>
+
+          <ExpandableSection
+            title="Certifications"
+            icon={<Award size={28} strokeWidth={1.5} />}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {profile.certifications && profile.certifications.length > 0 ? (
+                profile.certifications.map((cert: any, i: number) => (
+                  <div
+                    key={i}
+                    className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm flex flex-col h-full"
+                  >
+                    <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1">
+                      {cert.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">{cert.issuer}</p>
+                    <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      {cert.issueDate && (
+                        <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                          <Calendar size={13} />
+                          Issued: {cert.issueDate}
+                        </span>
+                      )}
+                      {cert.credentialUrl && (
+                        <a
+                          href={cert.credentialUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                        >
+                          View Credential <ExternalLink size={12} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm flex flex-col h-full">
+                    <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1">
+                      Rest API (Intermediate)
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">HackerRank</p>
+                    <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                        <Calendar size={13} />
+                        Issued: April 2026
+                      </span>
+                      <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                      >
+                        View Credential <ExternalLink size={12} />
+                      </a>
+                    </div>
+                  </div>
+                  <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm flex flex-col h-full">
+                    <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1">
+                      JavaScript (Basic)
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">HackerRank</p>
+                    <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                        <Calendar size={13} />
+                        Issued: Nov 2025
+                      </span>
+                      <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                      >
+                        View Credential <ExternalLink size={12} />
+                      </a>
+                    </div>
+                  </div>
+                  <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm flex flex-col h-full md:col-span-2 lg:col-span-1">
+                    <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1">
+                      Machine Learning Engineering for Production (MLOps)
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-4">
+                      DeepLearning.AI
+                    </p>
+                    <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                        <Calendar size={13} />
+                        Issued: Aug 2025
+                      </span>
+                      <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                      >
+                        View Credential <ExternalLink size={12} />
+                      </a>
+                    </div>
+                  </div>
                 </>
               )}
             </div>

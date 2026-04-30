@@ -24,6 +24,12 @@ export const profileQuery = defineQuery(`
     "stats": stats[]{
       label,
       value
+    },
+    "certifications": certifications[]{
+      title,
+      issuer,
+      issueDate,
+      credentialUrl
     }
   }
 `);

@@ -39,6 +39,11 @@ export const profileType = defineType({
       type: "array",
       of: [defineArrayMember({ type: "statItem" })],
     }),
+    defineField({
+      name: "certifications",
+      type: "array",
+      of: [defineArrayMember({ type: "certification" })],
+    }),
   ],
   preview: {
     select: {

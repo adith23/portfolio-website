@@ -6,6 +6,7 @@ import { linkItemType } from './linkItemType';
 import { mediaAssetType } from './mediaAssetType';
 import { techTagType } from './techTagType';
 import { profileType } from './profileType';
+import { certificationType } from './certificationType';
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   projectType,
@@ -15,4 +16,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   mediaAssetType,
   techTagType,
   profileType,
+  certificationType,
 ];
