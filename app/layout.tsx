@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 
 import "@/app/globals.css";
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="relative min-h-screen">
             <main>{children}</main>
           </div>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
