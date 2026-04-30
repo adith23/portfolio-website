@@ -2,14 +2,37 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Code,
+  Calendar,
+  GraduationCap,
+  User,
+} from "lucide-react";
 
-import { Container } from "@/components/container";
-import { Eyebrow, Heading } from "@/components/heading";
 import { RichText } from "@/components/rich-text";
-import { Tag } from "@/components/tag";
 import { getProjectBySlug, getProjectSlugs } from "@/lib/content";
 import { buildProjectJsonLd } from "@/lib/jsonld";
 import { absoluteUrl, formatDate } from "@/lib/utils";
+
+// --- Reusable Badge (matches main page) ---
+
+const Badge = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <span
+    className={`inline-flex items-center rounded-full border border-gray-300 px-2.5 py-0.5 text-xs font-medium text-gray-800 bg-white ${className}`}
+  >
+    {children}
+  </span>
+);
+
+// --- Static params & metadata (unchanged) ---
 
 export async function generateStaticParams() {
   const slugs = await getProjectSlugs();
@@ -47,6 +70,8 @@ export async function generateMetadata({
   };
 }
 
+// --- Page ---
+
 export default async function ProjectDetailPage({
   params,
 }: {
@@ -59,121 +84,223 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
+  const formatMonth = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
+
+  const dateRange = (project as any).startDate
+    ? `${formatMonth((project as any).startDate)} - ${(project as any).endDate ? formatMonth((project as any).endDate) : "Present"}`
+    : null;
+
   return (
-    <>
-      <section className="py-14 md:py-20">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="space-y-6">
-              <Eyebrow>Project case study</Eyebrow>
-              <Heading>{project.title}</Heading>
-              <p className="max-w-3xl text-lg leading-8 text-[var(--muted)]">{project.summary}</p>
-              <div className="flex flex-wrap gap-3">
-                {project.techStack.map((tag) => (
-                  <Tag key={tag} label={tag} />
-                ))}
-              </div>
-            </div>
-            <aside className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-6">
-              <dl className="grid gap-5">
-                <div>
-                  <dt className="text-sm font-semibold">Status</dt>
-                  <dd className="mt-1 text-[var(--muted)]">{project.status}</dd>
-                </div>
-                <div>
-                  <dt className="text-sm font-semibold">Published</dt>
-                  <dd className="mt-1 text-[var(--muted)]">{formatDate(project.publishedAt)}</dd>
-                </div>
-                <div>
-                  <dt className="text-sm font-semibold">Roles</dt>
-                  <dd className="mt-1 text-[var(--muted)]">{project.roles.join(", ")}</dd>
-                </div>
-                <div className="flex flex-wrap gap-4 text-sm font-semibold">
-                  {project.liveUrl ? (
-                    <Link href={project.liveUrl} target="_blank" rel="noreferrer" className="focus-ring text-[var(--accent-strong)]">
-                      Live demo
-                    </Link>
-                  ) : null}
-                  {project.githubUrl ? (
-                    <Link href={project.githubUrl} target="_blank" rel="noreferrer" className="focus-ring text-[var(--foreground)]">
-                      Source code
-                    </Link>
-                  ) : null}
-                </div>
-              </dl>
-            </aside>
+    <main className="min-h-screen bg-white font-sans selection:bg-gray-200">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12 min-h-screen">
+        {/* Back link */}
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors mb-8"
+        >
+          <ArrowLeft size={14} />
+          Back to portfolio
+        </Link>
+
+        {/* Header: Title & Tech Stack (Left) | Date & Category (Right) */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4 mb-6">
+          <div className="space-y-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+              {project.title}
+            </h1>
+            {project.techStack.length > 0 && (
+              <p className="text-sm text-gray-500 font-medium">
+                {project.techStack.join(" · ")}
+              </p>
+            )}
           </div>
-          <div className="mt-10 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--accent-soft)]">
-            {project.coverImage?.url ? (
-              <div className="relative aspect-[16/8]">
-                <Image
-                  src={project.coverImage.url}
-                  alt={project.coverImage.alt}
-                  fill
-                  className="object-cover"
-                />
+          <div className="flex flex-col items-start sm:items-end space-y-1.5 shrink-0">
+            {dateRange && (
+              <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                <Calendar size={13} />
+                {dateRange}
+              </span>
+            )}
+            {(project as any).category && (
+              <Badge className="gap-1">
+                {(project as any).category === "University Project" ? (
+                  <GraduationCap size={12} />
+                ) : (
+                  <User size={12} />
+                )}
+                {(project as any).category}
+              </Badge>
+            )}
+          </div>
+        </div>
+
+        {/* Summary */}
+        <p className="text-gray-700 leading-relaxed text-base mb-6">
+          {project.summary}
+        </p>
+
+        {/* Media Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          {project.videos &&
+            project.videos.map((url, index) => {
+              const isYouTube =
+                url.includes("youtube.com") || url.includes("youtu.be");
+              const videoId = isYouTube
+                ? url.includes("v=")
+                  ? new URL(url).searchParams.get("v")
+                  : url.split("/").pop()
+                : null;
+              return (
+                <div
+                  key={`video-${index}`}
+                  className="relative aspect-[16/9] sm:col-span-2 rounded-xl overflow-hidden border border-gray-100 bg-black"
+                >
+                  {isYouTube ? (
+                    <iframe
+                      className="absolute inset-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video
+                      className="absolute inset-0 w-full h-full object-cover"
+                      controls
+                    >
+                      <source src={url} />
+                    </video>
+                  )}
+                </div>
+              );
+            })}
+          {project.gallery &&
+            project.gallery.length > 0 &&
+            project.gallery.map(
+              (image, index) =>
+                image.url && (
+                  <div
+                    key={`gallery-${index}`}
+                    className="relative aspect-[4/3] rounded-xl overflow-hidden border border-gray-100 bg-gray-50"
+                  >
+                    <Image
+                      src={image.url}
+                      alt={image.alt || `Gallery image ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ),
+            )}
+        </div>
+
+        {/* Action buttons */}
+        <div className="flex flex-col sm:flex-row flex-wrap gap-3 mb-8 sm:mb-10">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white-900 px-4 py-2 text-sm font-medium text-white transition-colors w-full sm:w-auto text-center"
+            >
+              <ExternalLink size={14} />
+              Live Demo
+            </a>
+          )}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 transition-colors w-full sm:w-auto text-center"
+            >
+              <Code size={14} />
+              Source Code
+            </a>
+          )}
+        </div>
+
+        {/* Info cards: Status, Published, Roles */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8 sm:mb-10">
+          <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm">
+            <h3 className="text-sm font-semibold text-black uppercase tracking-wide mb-2">
+              Status
+            </h3>
+            <p className="text-sm text-gray-700">{project.status}</p>
+          </div>
+          <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm">
+            <h3 className="text-sm font-semibold text-black uppercase tracking-wide mb-2">
+              Published
+            </h3>
+            <p className="text-sm text-gray-700">
+              {formatDate(project.publishedAt)}
+            </p>
+          </div>
+          {project.roles.length > 0 && (
+            <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm">
+              <h3 className="text-sm font-semibold text-black uppercase tracking-wide mb-2">
+                Roles
+              </h3>
+              <p className="text-sm text-gray-700">
+                {project.roles.join(", ")}
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Problem / Solution / Impact */}
+        {(project.problem || project.solution || project.impact) && (
+          <div className="space-y-4 mb-10">
+            {project.problem && (
+              <div className="border border-gray-200 rounded-xl p-4 sm:p-6 bg-white shadow-sm">
+                <h3 className="text-sm font-semibold text-black uppercase tracking-wide mb-3">
+                  Problem
+                </h3>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {project.problem}
+                </p>
               </div>
-            ) : (
-              <div className="flex aspect-[16/8] items-center justify-center text-sm font-medium text-[var(--muted)]">
-                Project cover image
+            )}
+            {project.solution && (
+              <div className="border border-gray-200 rounded-xl p-4 sm:p-6 bg-white shadow-sm">
+                <h3 className="text-sm font-semibold text-black uppercase tracking-wide mb-3">
+                  Solution
+                </h3>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {project.solution}
+                </p>
+              </div>
+            )}
+            {project.impact && (
+              <div className="border border-gray-200 rounded-xl p-4 sm:p-6 bg-white shadow-sm">
+                <h3 className="text-sm font-semibold text-black uppercase tracking-wide mb-3">
+                  Impact
+                </h3>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {project.impact}
+                </p>
               </div>
             )}
           </div>
-        </Container>
-      </section>
+        )}
 
-      <section className="pb-16 md:pb-20">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-            <aside className="space-y-6">
-              {project.problem ? (
-                <div className="surface rounded-[var(--radius-md)] border border-[var(--line)] p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent-strong)]">Problem</p>
-                  <p className="mt-3 leading-7 text-[var(--muted)]">{project.problem}</p>
-                </div>
-              ) : null}
-              {project.solution ? (
-                <div className="surface rounded-[var(--radius-md)] border border-[var(--line)] p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent-strong)]">Solution</p>
-                  <p className="mt-3 leading-7 text-[var(--muted)]">{project.solution}</p>
-                </div>
-              ) : null}
-              {project.impact ? (
-                <div className="surface rounded-[var(--radius-md)] border border-[var(--line)] p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent-strong)]">Impact</p>
-                  <p className="mt-3 leading-7 text-[var(--muted)]">{project.impact}</p>
-                </div>
-              ) : null}
-            </aside>
-            <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-8">
-              <RichText value={project.content} />
-            </div>
+        {/* Case study content */}
+        {project.content && project.content.length > 0 && (
+          <div className="border border-gray-200 rounded-xl p-4 sm:p-6 md:p-8 bg-white shadow-sm mb-10 prose prose-gray prose-sm max-w-none">
+            <RichText value={project.content} />
           </div>
-
-          {project.gallery.length ? (
-            <div className="mt-8 grid gap-6 md:grid-cols-2">
-              {project.gallery.map((image, index) => (
-                <div key={`${image.alt}-${index}`} className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--line)] bg-white/70">
-                  {image.url ? (
-                    <div className="relative aspect-[4/3]">
-                      <Image src={image.url} alt={image.alt} fill className="object-cover" />
-                    </div>
-                  ) : (
-                    <div className="flex aspect-[4/3] items-center justify-center text-sm text-[var(--muted)]">
-                      Gallery image
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : null}
-        </Container>
-      </section>
+        )}
+      </div>
 
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildProjectJsonLd(project)) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildProjectJsonLd(project)),
+        }}
       />
-    </>
+    </main>
   );
 }

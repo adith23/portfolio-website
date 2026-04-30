@@ -18,7 +18,7 @@
   --radius-sm: 0.75rem;
   --radius-md: 1.25rem;
   --radius-lg: 2rem;
-  --container: 76rem;
+  --container: min(76rem, 100vw - 2rem);
 }
 
 * {
@@ -72,6 +72,8 @@ img {
 
 .prose-rich {
   color: var(--foreground);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .prose-rich :where(p, ul, ol) {

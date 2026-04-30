@@ -22,14 +22,14 @@ export function ProjectCard({ project }: { project: ProjectCardType }) {
           </div>
         )}
       </div>
-      <div className="space-y-5 p-6">
+      <div className="space-y-5 p-4 sm:p-6">
         <div className="flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
           <span>{project.status || "Completed"}</span>
           <span aria-hidden="true">/</span>
           <time dateTime={project.publishedAt || (project as any).date}>{formatDate(project.publishedAt || (project as any).date)}</time>
         </div>
         <div className="space-y-3">
-          <h3 className="font-[family-name:var(--font-display)] text-2xl leading-tight">
+          <h3 className="font-[family-name:var(--font-display)] text-xl sm:text-2xl leading-tight">
             <Link href={`/projects/${project.slug}`} className="focus-ring hover:text-[var(--accent-strong)]">
               {project.title}
             </Link>

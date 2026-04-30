@@ -1,5 +1,5 @@
 import { type SchemaTypeDefinition } from 'sanity';
-import { projectType } from './project';
+import { projectType } from './projectType';
 import { seoType } from './seoType';
 import { statItemType } from './statItemType';
 import { linkItemType } from './linkItemType';

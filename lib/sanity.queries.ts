@@ -36,6 +36,9 @@ export const featuredProjectsQuery = defineQuery(`
     featured,
     publishedAt,
     status,
+    category,
+    startDate,
+    endDate,
     githubUrl,
     liveUrl,
     "techStack": techStack[]{
@@ -56,6 +59,9 @@ export const projectsIndexQuery = defineQuery(`
     featured,
     publishedAt,
     status,
+    category,
+    startDate,
+    endDate,
     githubUrl,
     liveUrl,
     "techStack": techStack[]{
@@ -76,6 +82,9 @@ export const projectBySlugQuery = defineQuery(`
     featured,
     publishedAt,
     status,
+    category,
+    startDate,
+    endDate,
     githubUrl,
     liveUrl,
     problem,
@@ -94,7 +103,8 @@ export const projectBySlugQuery = defineQuery(`
     "gallery": gallery[]{
       alt,
       asset
-    }
+    },
+    videos
   }
 `);
 

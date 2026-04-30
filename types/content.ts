@@ -52,6 +52,9 @@ export type ProjectCard = {
   featured: boolean;
   publishedAt: string;
   status: string;
+  category?: string;
+  startDate?: string;
+  endDate?: string;
   coverImage?: ImageAsset;
   techStack: string[];
   githubUrl?: string;
@@ -64,6 +67,7 @@ export type ProjectDetail = ProjectCard & {
   solution?: string;
   impact?: string;
   gallery: ImageAsset[];
+  videos?: string[];
   content: PortableTextBlock[];
   seo?: {
     title?: string;

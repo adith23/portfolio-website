@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site-config";
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[rgba(249,245,237,0.76)] backdrop-blur-xl">
-      <Container className="flex min-h-20 items-center justify-between gap-6">
+      <Container className="flex min-h-16 sm:min-h-20 items-center justify-between gap-6">
         <Link href="/" className="focus-ring font-[family-name:var(--font-display)] text-xl font-semibold">
           {siteConfig.shortName}
         </Link>

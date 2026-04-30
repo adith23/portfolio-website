@@ -26,7 +26,7 @@ export default async function ContactPage() {
             <p className="max-w-xl text-lg leading-8 text-[var(--muted)]">
               Reach out for product engineering, system architecture, platform reliability, or delivery planning work.
             </p>
-            <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-6">
+            <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-4 sm:p-6">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--accent-strong)]">Direct links</p>
               <div className="mt-4 flex flex-col gap-3 text-[var(--muted)]">
                 <Link href={`mailto:${profile.contactEmail}`} className="focus-ring">
@@ -40,7 +40,7 @@ export default async function ContactPage() {
               </div>
             </div>
           </div>
-          <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-6 md:p-8">
+          <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-4 sm:p-6 md:p-8">
             <ContactForm />
           </div>
         </div>

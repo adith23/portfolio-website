@@ -17,7 +17,7 @@ export default async function AboutPage() {
     <Section>
       <Container>
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <aside className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-8">
+          <aside className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-5 sm:p-8">
             <Eyebrow>Profile</Eyebrow>
             <Heading className="text-3xl">{profile.fullName}</Heading>
             <p className="mt-4 text-base leading-8 text-[var(--muted)]">{profile.headline}</p>
@@ -37,12 +37,12 @@ export default async function AboutPage() {
             </dl>
           </aside>
           <div className="space-y-8">
-            <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-8">
+            <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-5 sm:p-8">
               <Eyebrow>Approach</Eyebrow>
               <Heading className="text-3xl">Design for change, not just delivery.</Heading>
               <p className="mt-5 text-base leading-8 text-[var(--muted)]">{profile.longBio}</p>
             </div>
-            <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-8">
+            <div className="surface rounded-[var(--radius-lg)] border border-[var(--line)] p-5 sm:p-8">
               <Eyebrow>Core strengths</Eyebrow>
               <div className="mt-5 flex flex-wrap gap-3">
                 {profile.skills.map((skill) => (

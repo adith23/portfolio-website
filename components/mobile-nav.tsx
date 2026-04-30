@@ -25,7 +25,7 @@ export function MobileNav() {
       {open ? (
         <div
           id="mobile-nav"
-          className="surface absolute inset-x-5 top-20 z-50 rounded-[var(--radius-md)] border border-[var(--line)] p-4"
+          className="surface absolute inset-x-4 sm:inset-x-5 top-16 sm:top-20 z-50 rounded-[var(--radius-md)] border border-[var(--line)] p-4"
         >
           <nav aria-label="Mobile navigation" className="flex flex-col gap-2">
             {siteConfig.navItems.map((item) => (

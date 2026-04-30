@@ -31,7 +31,7 @@ export function Heading({
   return (
     <h2
       className={cn(
-        "font-[family-name:var(--font-display)] text-4xl leading-tight md:text-5xl",
+        "font-[family-name:var(--font-display)] text-3xl sm:text-4xl leading-tight md:text-5xl",
         className,
       )}
     >

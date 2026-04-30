@@ -17,12 +17,19 @@ export const projectType = defineType({
       },
       validation: (rule) => rule.required(),
     }),
-    defineField({ name: "summary", type: "text", rows: 4, validation: (rule) => rule.required().max(240) }),
+    defineField({ name: "summary", type: "text", rows: 4, validation: (rule) => rule.required().max(600) }),
     defineField({ name: "coverImage", type: "mediaAssetRef" }),
     defineField({
       name: "gallery",
       type: "array",
       of: [defineArrayMember({ type: "mediaAssetRef" })],
+    }),
+    defineField({
+      name: "videos",
+      title: "Video URLs",
+      type: "array",
+      of: [defineArrayMember({ type: "url" })],
+      description: "List of video URLs (e.g., YouTube, Vimeo, or raw MP4 links)",
     }),
     defineField({
       name: "status",
@@ -33,6 +40,25 @@ export const projectType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({ name: "featured", type: "boolean", initialValue: false }),
+    defineField({
+      name: "category",
+      type: "string",
+      options: {
+        list: ["University Project", "Personal Project"],
+      },
+    }),
+    defineField({
+      name: "startDate",
+      title: "Start Date",
+      type: "date",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "endDate",
+      title: "End Date",
+      type: "date",
+      description: "Leave empty if the project is ongoing.",
+    }),
     defineField({ name: "publishedAt", type: "datetime", validation: (rule) => rule.required() }),
     defineField({ name: "sortOrder", type: "number", initialValue: 10 }),
     defineField({

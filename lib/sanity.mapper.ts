@@ -96,6 +96,9 @@ function mapProjectBase(raw: Record<string, unknown>): ProjectCard {
     featured: Boolean(raw.featured),
     publishedAt: String(raw.publishedAt ?? ""),
     status: String(raw.status ?? ""),
+    category: typeof raw.category === "string" ? raw.category : undefined,
+    startDate: typeof raw.startDate === "string" ? raw.startDate : undefined,
+    endDate: typeof raw.endDate === "string" ? raw.endDate : undefined,
     coverImage: mapImage((raw.coverImage as ImageInput | undefined) ?? null),
     techStack: mapLabelArray(raw.techStack),
     githubUrl: typeof raw.githubUrl === "string" ? raw.githubUrl : undefined,
@@ -128,6 +131,7 @@ export function mapProjectDetail(raw: Record<string, unknown>): ProjectDetail {
     gallery: (Array.isArray(raw.gallery) ? raw.gallery : [])
       .map((image) => mapImage((image as ImageInput | undefined) ?? null))
       .filter((image: ImageAsset | undefined): image is ImageAsset => Boolean(image)),
+    videos: mapStringArray(raw.videos),
     content: Array.isArray(raw.caseStudyBlocks)
       ? (raw.caseStudyBlocks as ProjectDetail["content"])
       : [],

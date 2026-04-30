@@ -10,7 +10,7 @@ export const ThemeToggle: React.FC = () => {
     <button 
       onClick={() => setIsDark(!isDark)}
       aria-label="Toggle theme"
-      className="absolute top-4 right-4 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+      className="absolute top-4 right-4 z-10 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
     >
       <Moon size={18} className={isDark ? 'text-gray-900' : ''} />
       <div className="w-8 h-4 bg-gray-200 rounded-full relative flex items-center p-0.5 border border-gray-300">
