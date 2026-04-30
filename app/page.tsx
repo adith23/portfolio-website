@@ -25,7 +25,7 @@ interface BadgeProps {
 
 const Badge: React.FC<BadgeProps> = ({ children, className = "" }) => (
   <span
-    className={`inline-flex items-center rounded-full border border-gray-300 px-2.5 py-0.5 text-xs font-medium text-gray-800 bg-white ${className}`}
+    className={`inline-flex items-center rounded-full border border-gray-300 dark:border-gray-600 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 ${className}`}
   >
     {children}
   </span>
@@ -75,19 +75,21 @@ const ProfileHeader: React.FC<{ profile: any }> = ({ profile }) => {
         <img
           src={profile.avatar?.url}
           alt={profile.avatar?.alt}
-          className="w-24 h-24 rounded-full object-cover border border-gray-200 shadow-sm filter grayscale"
+          className="w-24 h-24 rounded-full object-cover border border-gray-200 dark:border-gray-700 shadow-sm filter grayscale"
         />
       </div>
 
       <div className="flex items-center gap-3 mb-1">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
           {profile.fullName}
         </h1>
       </div>
 
-      <p className="text-lg text-gray-700 mb-2">{profile.headline}</p>
+      <p className="text-lg text-gray-700 dark:text-gray-300 mb-2">
+        {profile.headline}
+      </p>
 
-      <div className="flex flex-col items-center gap-y-2 text-gray-500 text-sm">
+      <div className="flex flex-col items-center gap-y-2 text-gray-500 dark:text-gray-400 text-sm">
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
           {profile.socialLinks && profile.socialLinks.length > 0 ? (
             profile.socialLinks.map((link: any) => (
@@ -96,7 +98,7 @@ const ProfileHeader: React.FC<{ profile: any }> = ({ profile }) => {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
+                className="flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <SocialIcon label={link.label} size={16} />
                 <span className="leading-tight pt-[2px]">{link.label}</span>
@@ -108,7 +110,7 @@ const ProfileHeader: React.FC<{ profile: any }> = ({ profile }) => {
                 href="https://linkedin.com/in/adithyaramanayake"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
+                className="flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <SocialIcon label="LinkedIn" size={16} />
                 <span className="leading-tight pt-[2px]">LinkedIn</span>
@@ -117,7 +119,7 @@ const ProfileHeader: React.FC<{ profile: any }> = ({ profile }) => {
                 href="https://github.com/adithyaramanayake"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 hover:text-gray-900 transition-colors"
+                className="flex items-center gap-1.5 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 <SocialIcon label="GitHub" size={16} />
                 <span className="leading-tight pt-[2px]">GitHub</span>
@@ -157,16 +159,16 @@ const ProjectCardComponent: React.FC<{ project: any }> = ({ project }) => {
     : null;
 
   return (
-    <article className="border border-gray-200 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col">
+    <article className="border border-gray-200 dark:border-white rounded-xl bg-white dark:bg-gray-900 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col">
       {/* Header: Title & Tech Stack (Left) | Date & Category (Right) */}
       <div className="px-4 sm:px-5 pt-5 sm:pt-7 pb-3 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
         {/* Left Side: Title and Tech Stack */}
         <div className="flex flex-col space-y-2">
-          <h3 className="text-lg font-bold text-gray-900 tracking-tight">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight">
             {project.title}
           </h3>
           {project.techStack && project.techStack.length > 0 && (
-            <p className="text-xs text-gray-500 font-medium">
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
               {project.techStack.join(" · ")}
             </p>
           )}
@@ -175,7 +177,7 @@ const ProjectCardComponent: React.FC<{ project: any }> = ({ project }) => {
         {/* Right Side: Date and Category */}
         <div className="flex flex-col items-start sm:items-end space-y-1.5 shrink-0">
           {dateRange && (
-            <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+            <span className="inline-flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
               <Calendar size={13} />
               {dateRange}
             </span>
@@ -195,13 +197,13 @@ const ProjectCardComponent: React.FC<{ project: any }> = ({ project }) => {
 
       {/* Description */}
       <div className="px-4 sm:px-5 pb-4">
-        <p className="text-sm text-gray-700 leading-relaxed line-clamp-3">
+        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3">
           {project.summary || project.description}
         </p>
       </div>
 
       {/* Cover image */}
-      <div className="mx-4 sm:mx-5 mb-4 rounded-lg overflow-hidden border border-gray-100 bg-gray-50">
+      <div className="mx-4 sm:mx-5 mb-4 rounded-lg overflow-hidden border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
         {project.coverImage?.url ? (
           <img
             src={project.coverImage.url}
@@ -209,7 +211,7 @@ const ProjectCardComponent: React.FC<{ project: any }> = ({ project }) => {
             className="w-full aspect-[16/9] object-cover"
           />
         ) : (
-          <div className="w-full aspect-[16/9] flex items-center justify-center text-xs text-gray-400">
+          <div className="w-full aspect-[16/9] flex items-center justify-center text-xs text-gray-400 dark:text-gray-600">
             Project cover image
           </div>
         )}
@@ -222,7 +224,7 @@ const ProjectCardComponent: React.FC<{ project: any }> = ({ project }) => {
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-100 transition-colors"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 dark:border-white bg-white dark:bg-gray-900 px-4 py-2 text-sm font-medium text-white dark:!text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
             <ExternalLink size={14} />
             Live Demo
@@ -230,7 +232,7 @@ const ProjectCardComponent: React.FC<{ project: any }> = ({ project }) => {
         )}
         <Link
           href={`/projects/${project.slug}`}
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 transition-colors"
+          className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 dark:border-white bg-white dark:bg-gray-900 px-4 py-2 text-sm font-medium text-gray-800 dark:!text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         >
           <Eye size={14} />
           Project View
@@ -249,8 +251,8 @@ export default async function HomePage() {
   ]);
 
   return (
-    <main className="min-h-screen bg-[#fafafa] font-sans selection:bg-gray-200">
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 py-8 md:py-12 bg-white min-h-screen shadow-sm relative">
+    <main className="min-h-screen bg-[#fafafa] dark:bg-black font-sans selection:bg-gray-200 dark:selection:bg-white/20">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 py-8 md:py-12 bg-white dark:bg-gray-900 min-h-screen shadow-sm relative">
         <ProfileHeader profile={profile} />
 
         <div className="max-w-6xl mx-auto px-0 sm:px-2 md:px-8">
@@ -258,7 +260,7 @@ export default async function HomePage() {
             title="About"
             icon={<Contact size={28} strokeWidth={1.5} />}
           >
-            <p className="text-gray-700 leading-relaxed text-base">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
               {/* Gracefully fallbacks to hardcoded text if CMS is empty */}
               {profile.longBio ||
                 profile.shortBio ||
@@ -291,9 +293,9 @@ export default async function HomePage() {
               ].map((group) => (
                 <div
                   key={group.category}
-                  className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm"
+                  className="border border-gray-200 dark:border-white rounded-xl p-5 bg-white dark:bg-gray-900 shadow-sm"
                 >
-                  <h3 className="text-sm font-semibold text-black uppercase tracking-wide mb-3">
+                  <h3 className="text-sm font-semibold text-black dark:text-white uppercase tracking-wide mb-3">
                     {group.category}
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -358,15 +360,17 @@ export default async function HomePage() {
                 profile.certifications.map((cert: any, i: number) => (
                   <div
                     key={i}
-                    className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm flex flex-col h-full"
+                    className="border border-gray-200 dark:border-white rounded-xl p-5 bg-white dark:bg-gray-900 shadow-sm flex flex-col h-full"
                   >
-                    <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1">
+                    <h3 className="text-base font-bold text-gray-900 dark:text-white tracking-tight mb-1">
                       {cert.title}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-4">{cert.issuer}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                      {cert.issuer}
+                    </p>
                     <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       {cert.issueDate && (
-                        <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                        <span className="inline-flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
                           <Calendar size={13} />
                           Issued: {cert.issueDate}
                         </span>
@@ -376,7 +380,7 @@ export default async function HomePage() {
                           href={cert.credentialUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 dark:!text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                         >
                           View Credential <ExternalLink size={12} />
                         </a>
@@ -386,13 +390,15 @@ export default async function HomePage() {
                 ))
               ) : (
                 <>
-                  <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm flex flex-col h-full">
-                    <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1">
+                  <div className="border border-gray-200 dark:border-white rounded-xl p-5 bg-white dark:bg-gray-900 shadow-sm flex flex-col h-full">
+                    <h3 className="text-base font-bold text-gray-900 dark:text-white tracking-tight mb-1">
                       Rest API (Intermediate)
                     </h3>
-                    <p className="text-sm text-gray-600 mb-4">HackerRank</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                      HackerRank
+                    </p>
                     <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
                         <Calendar size={13} />
                         Issued: April 2026
                       </span>
@@ -400,19 +406,21 @@ export default async function HomePage() {
                         href="#"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 dark:!text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                       >
                         View Credential <ExternalLink size={12} />
                       </a>
                     </div>
                   </div>
-                  <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm flex flex-col h-full">
-                    <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1">
+                  <div className="border border-gray-200 dark:border-white rounded-xl p-5 bg-white dark:bg-gray-900 shadow-sm flex flex-col h-full">
+                    <h3 className="text-base font-bold text-gray-900 dark:text-white tracking-tight mb-1">
                       JavaScript (Basic)
                     </h3>
-                    <p className="text-sm text-gray-600 mb-4">HackerRank</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                      HackerRank
+                    </p>
                     <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
                         <Calendar size={13} />
                         Issued: Nov 2025
                       </span>
@@ -420,21 +428,21 @@ export default async function HomePage() {
                         href="#"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 dark:!text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                       >
                         View Credential <ExternalLink size={12} />
                       </a>
                     </div>
                   </div>
-                  <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm flex flex-col h-full md:col-span-2 lg:col-span-1">
-                    <h3 className="text-base font-bold text-gray-900 tracking-tight mb-1">
+                  <div className="border border-gray-200 dark:border-white rounded-xl p-5 bg-white dark:bg-gray-900 shadow-sm flex flex-col h-full md:col-span-2 lg:col-span-1">
+                    <h3 className="text-base font-bold text-gray-900 dark:text-white tracking-tight mb-1">
                       Machine Learning Engineering for Production (MLOps)
                     </h3>
-                    <p className="text-sm text-gray-600 mb-4">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                       DeepLearning.AI
                     </p>
                     <div className="mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500">
+                      <span className="inline-flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
                         <Calendar size={13} />
                         Issued: Aug 2025
                       </span>
@@ -442,7 +450,7 @@ export default async function HomePage() {
                         href="#"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-800 dark:!text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                       >
                         View Credential <ExternalLink size={12} />
                       </a>
