@@ -8,19 +8,19 @@ export function handleRevalidation({
   slug?: string;
 }) {
   if (type === "profile") {
-    revalidateTag("profile");
+    revalidateTag("profile", "default");
     revalidatePath("/", "page");
     revalidatePath("/about", "page");
     revalidatePath("/contact", "page");
     return;
   }
 
-  revalidateTag("projects");
+  revalidateTag("projects", "default");
   revalidatePath("/", "page");
   revalidatePath("/projects", "page");
 
   if (slug) {
-    revalidateTag(`project:${slug}`);
+    revalidateTag(`project:${slug}`, "default");
     revalidatePath(`/projects/${slug}`, "page");
   }
 }
