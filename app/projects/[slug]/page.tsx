@@ -184,13 +184,13 @@ export default async function ProjectDetailPage({
                 image.url && (
                   <div
                     key={`gallery-${index}`}
-                    className="relative aspect-[4/3] rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50"
+                    className="relative rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50"
                   >
-                    <Image
+                    <img
                       src={image.url}
                       alt={image.alt || `Gallery image ${index + 1}`}
-                      fill
-                      className="object-cover"
+                      className="w-full h-auto object-contain block"
+                      loading="lazy"
                     />
                   </div>
                 ),
