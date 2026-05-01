@@ -7,7 +7,11 @@ export const projectType = defineType({
   type: "document",
   icon: DocumentsIcon,
   fields: [
-    defineField({ name: "title", type: "string", validation: (rule) => rule.required() }),
+    defineField({
+      name: "title",
+      type: "string",
+      validation: (rule) => rule.required(),
+    }),
     defineField({
       name: "slug",
       type: "slug",
@@ -41,7 +45,8 @@ export const projectType = defineType({
       title: "Video URLs",
       type: "array",
       of: [defineArrayMember({ type: "url" })],
-      description: "List of video URLs (e.g., YouTube, Vimeo, or raw MP4 links)",
+      description:
+        "List of video URLs (e.g., YouTube, Vimeo, or raw MP4 links)",
     }),
     defineField({
       name: "status",
@@ -71,7 +76,11 @@ export const projectType = defineType({
       type: "date",
       description: "Leave empty if the project is ongoing.",
     }),
-    defineField({ name: "publishedAt", type: "datetime", validation: (rule) => rule.required() }),
+    defineField({
+      name: "publishedAt",
+      type: "datetime",
+      validation: (rule) => rule.required(),
+    }),
     defineField({ name: "sortOrder", type: "number", initialValue: 10 }),
     defineField({
       name: "techStack",
@@ -109,7 +118,10 @@ export const projectType = defineType({
             { title: "Heading 3", value: "h3" },
           ],
           marks: {
-            decorators: [{ title: "Strong", value: "strong" }, { title: "Emphasis", value: "em" }],
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+            ],
             annotations: [
               {
                 name: "link",
@@ -118,7 +130,8 @@ export const projectType = defineType({
                   defineField({
                     name: "href",
                     type: "url",
-                    validation: (rule) => rule.required().uri({ scheme: ["http", "https"] }),
+                    validation: (rule) =>
+                      rule.required().uri({ scheme: ["http", "https"] }),
                   }),
                 ],
               },
