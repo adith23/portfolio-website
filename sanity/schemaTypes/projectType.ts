@@ -17,7 +17,19 @@ export const projectType = defineType({
       },
       validation: (rule) => rule.required(),
     }),
-    defineField({ name: "summary", type: "text", rows: 4, validation: (rule) => rule.required().max(600) }),
+    defineField({
+      name: "summary",
+      type: "text",
+      rows: 4,
+      validation: (rule) =>
+        rule.required().custom((text) => {
+          if (!text) return true;
+          const wordCount = text.trim().split(/\s+/).length;
+          return wordCount <= 500
+            ? true
+            : `Summary must be 500 words or less (currently ${wordCount} words)`;
+        }),
+    }),
     defineField({ name: "coverImage", type: "mediaAssetRef" }),
     defineField({
       name: "gallery",
