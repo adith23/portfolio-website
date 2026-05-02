@@ -139,9 +139,13 @@ export default async function ProjectDetailPage({
         </div>
 
         {/* Summary */}
-        <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base mb-6">
-          {project.summary}
-        </p>
+        <div className="text-gray-700 dark:text-gray-300 leading-relaxed text-base mb-6 space-y-4">
+          {project.summary
+            ?.split("\n")
+            .map((paragraph, index) =>
+              paragraph.trim() ? <p key={index}>{paragraph}</p> : null,
+            )}
+        </div>
 
         {/* Media Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
