@@ -75,7 +75,7 @@ const ProfileHeader: React.FC<{ profile: any }> = ({ profile }) => {
         <img
           src={profile.avatar?.url}
           alt={profile.avatar?.alt}
-          className="w-24 h-24 rounded-full object-cover border border-gray-200 dark:border-gray-700 shadow-sm filter grayscale"
+          className="w-24 h-24 rounded-full object-cover border border-gray-200 dark:border-gray-700 shadow-sm"
         />
       </div>
 
